@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 
 from sqlalchemy import select
 from user.models.user import UserModel
-from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema,PaginationSchema
+from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema
 
 
 @attr.define
@@ -22,6 +22,7 @@ class UserCrud:
         if result:
             return result.id
         return None
+
     async def get_uuid(self, email: str) -> Optional[str]:
         """ untuk forgot password"""
         query = select(UserModel.c.uuid).select_from(UserModel).where(UserModel.c.email == email)
@@ -55,7 +56,8 @@ class UserCrud:
 
     async def profile(self, id: str) -> Optional[UserReadSchema]:
         """ untuk cek profil"""
-        query = select(UserModel.c.username,UserModel.c.nama, UserModel.c.email).select_from(UserModel).where(UserModel.c.id == id)
+        query = select(UserModel.c.username, UserModel.c.nama, UserModel.c.email).select_from(UserModel).where(
+            UserModel.c.id == id)
         result = (await self.conn.execute(query)).first()
         if result:
             return cattr.structure(result._mapping, UserReadSchema)
@@ -81,7 +83,8 @@ class UserCrud:
         query = query.values(reviewer=status)
         await self.conn.execute(query)
         return True
-    async def list_user(self, page: PaginationSchema,  filter_nama: Optional[str] = None)->list[UserReadSchema]:
+
+    async def list_user(self, page: PaginationSchema, filter_nama: Optional[str] = None) -> list[UserReadSchema]:
         offset = (page.page_number - 1) * page.size
         query = select(UserModel.c.username, UserModel.c.nama, UserModel.c.email).select_from(UserModel).where(
             UserModel.c.id == id).offset(offset).limit(page.size)
