@@ -1,5 +1,5 @@
 import attr
-from pydantic import BaseModel, Field,validator
+from pydantic import BaseModel, Field, validator
 from user.exceptions import BelowZeroError
 from enum import Enum
 
@@ -19,8 +19,10 @@ class UserReadSchema:
     Melihat Informasi User
     """
     username: str
-    nama:str
+    nama: str
     email: str
+
+
 @attr.define(slots=False)
 class LoginSchema:
     """
@@ -32,12 +34,16 @@ class LoginSchema:
 
 class UserAddSchema(BaseModel):
     username: str
-    nama:str
+    nama: str
     email: str = Field(regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
     password: str
     reviewer: StatusReviewerEnum = Field(StatusReviewerEnum.NonReviewer)
+
+
 class UpdateEmailSchema(BaseModel):
-    email:str= Field(regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
+    email: str = Field(regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
+
+
 class PaginationSchema(BaseModel):
     """
     PaginationSchema setting
@@ -51,4 +57,3 @@ class PaginationSchema(BaseModel):
         if value <= 0:
             raise BelowZeroError
         return value
-
