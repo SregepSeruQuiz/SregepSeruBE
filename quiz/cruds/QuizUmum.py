@@ -21,7 +21,7 @@ class QuizUmumCrud:
         :param id:
         :return:
         """
-        query = select(QuizUmumModel.c.id, QuizUmumModel.c.Question, QuizUmumModel.c.Answer).where(
+        query = select(QuizUmumModel.c.id, QuizUmumModel.c.Question, QuizUmumModel.c.Answer).select_from(QuizUmumModel).where(
             QuizUmumModel.c.id != id).limit(1)
         result = (await self.conn.execute(query)).first()
         if result:

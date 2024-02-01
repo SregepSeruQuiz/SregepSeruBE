@@ -27,7 +27,7 @@ class QuizCustomListCrud:
             list[QuizCustomListReadByIdSchema]
         )
 
-    async def input_quiz_custom_list(self, id, data: QuizCustomListAddSchema) -> bool:
+    async def input_quiz_custom_list(self, id: int, data: QuizCustomListAddSchema) -> int:
         """
             untuk input list quiz
         :param id:
@@ -35,5 +35,15 @@ class QuizCustomListCrud:
         :return:
         """
         query = QuizCustomListModel.insert().values(User_ID=id, **data.dict())
+        result = await self.conn.execute(query)
+        return result.inserted_primary_key[0]
+
+    async def delete_quiz_custom_list(self, id: int) -> bool:
+        """
+        delete quiz custom list
+        :param id:
+        :return:
+        """
+        query = QuizCustomListModel.delete().where(QuizCustomModel.c.id == id)
         await self.conn.execute(query)
         return True
