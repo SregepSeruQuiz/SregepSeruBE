@@ -1,9 +1,10 @@
+from typing import Optional
+
 import attr
 import cattr
-from typing import Optional
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from sqlalchemy import select
 from user.models.user import UserModel
 from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema
 
@@ -15,7 +16,7 @@ class UserCrud:
     """
     conn: AsyncConnection
 
-    async def get_id(self, uuid: str) -> Optional[str]:
+    async def get_id(self, uuid: str) -> Optional[id]:
         """ untuk dpt id abis login"""
         query = select(UserModel.c.id).select_from(UserModel).where(UserModel.c.uuid == uuid)
         result = (await self.conn.execute(query)).first()
@@ -54,7 +55,7 @@ class UserCrud:
         await self.conn.execute(query)
         return True
 
-    async def profile(self, id: str) -> Optional[UserReadSchema]:
+    async def profile(self, id: int) -> Optional[UserReadSchema]:
         """ untuk cek profil"""
         query = select(UserModel.c.username, UserModel.c.nama, UserModel.c.email).select_from(UserModel).where(
             UserModel.c.id == id)
@@ -63,21 +64,21 @@ class UserCrud:
             return cattr.structure(result._mapping, UserReadSchema)
         return None
 
-    async def update_email(self, id: str, email: str) -> bool:
+    async def update_email(self, id: int, email: str) -> bool:
         """ untuk update email"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(email=email)
         await self.conn.execute(query)
         return True
 
-    async def update_password(self, id: str, password: str) -> bool:
+    async def update_password(self, id: int, password: str) -> bool:
         """ utuk update password"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(password=password)
         await self.conn.execute(query)
         return True
 
-    async def change_status_reviewer(self, id: str, status: str) -> bool:
+    async def change_status_reviewer(self, id: int, status: str) -> bool:
         """ untuk mengubah status reviewer"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(reviewer=status)
@@ -88,6 +89,12 @@ class UserCrud:
         offset = (page.page_number - 1) * page.size
         query = select(UserModel.c.username, UserModel.c.nama, UserModel.c.email).select_from(UserModel).where(
             UserModel.c.id == id).offset(offset).limit(page.size)
+        if filter_nama is not None:
+            query = query.where(UserModel.c.nama.ilike(f"%{filter_nama}%"))
+        if page.order == "desc":
+            query = query.order_by(UserModel.c.nama.desc())
+        else:
+            query = query.order_by(UserModel.c.nama.asc())
         result = await self.conn.execute(query)
         return cattr.structure(
             (row._mapping for row in result),
