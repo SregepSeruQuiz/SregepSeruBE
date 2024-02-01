@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from user.models.user import UserModel
-from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema
+from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema, UpdateEmailSchema
 
 
 @attr.define
@@ -64,7 +64,7 @@ class UserCrud:
             return cattr.structure(result._mapping, UserReadSchema)
         return None
 
-    async def update_email(self, id: int, email: str) -> bool:
+    async def update_email(self, id: int, email: str) -> UpdateEmailSchema:
         """ untuk update email"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(email=email)

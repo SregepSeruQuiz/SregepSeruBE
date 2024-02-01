@@ -85,7 +85,7 @@ class User:
             return result
         raise IdNotFoundError
 
-    async def update_email(self, id: int, email: str) -> bool:
+    async def update_email(self, id: int, email: str) -> UpdateEmailSchema:
         """
         ganti email
         :param id:
