@@ -9,7 +9,7 @@ from quiz.schemas.QuizUmum import QuizUmumReadSchema
 
 
 @attr.define
-class QuizUmumReadCrud:
+class QuizUmumCrud:
     """
     Crud untuk QuizUmum
     """
