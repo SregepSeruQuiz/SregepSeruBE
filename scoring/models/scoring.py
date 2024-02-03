@@ -13,6 +13,5 @@ ScoringModel: Table = Table(
     Column("id", BigInteger, primary_key=True),
     Column("Custom_ID", None, ForeignKey(QuizCustomListModel.c.id, ondelete="CASCADE")),
     Column("User_ID", None, ForeignKey(UserModel.c.id, ondelete="CASCADE")),
-    Column("Question", Unicode(256), nullable=False, unique=True),
-    Column("Score", SmallInteger),
+    Column("Score", SmallInteger)
 )

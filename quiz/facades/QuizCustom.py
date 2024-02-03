@@ -58,6 +58,16 @@ class QuizCustom:
         if result:
             return result
         raise QuizNotFoundError
+    async def get_quiz_custom(self,id:list[int])->QuizCustomReadSchema:
+        """
+        untuk mengambil soal 1 biji
+        :param id:
+        :return:
+        """
+        result = QuizCustomCrud(self.conn).get_quiz_custom(id)
+        if result:
+            return result
+        raise QuizNotFoundError
     async def edit_quiz_by_id(self,id: int, data: QuizCustomAddSchema)->bool:
         """
         untuk mengubah isi

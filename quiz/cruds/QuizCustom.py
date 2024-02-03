@@ -38,6 +38,7 @@ class QuizCustomCrud:
             (row._mapping for row in result),
             list[QuizCustomReadSchema]
         )
+
     async def question_by_id(self, id: int) -> Optional[QuizCustomReadSchema]:
         """
         untuk melihhat list semua soal
@@ -51,6 +52,21 @@ class QuizCustomCrud:
         if result:
             return cattr.structure(result._mapping, UserReadSchema)
         return None
+
+    async def get_quiz_custom(self, id: list[int]) -> Optional[QuizCustomReadSchema]:
+        """
+        get quiz custom untuk soal
+        :param id:
+        :return:
+        """
+        query = select(QuizCustomModel.c.id, QuizCustomModel.c.Custom_ID, QuizCustomModel.c.Question,
+                       QuizCustomModel.c.Score, QuizCustomModel.c.Answer).select_from(
+            QuizCustomModel).where(QuizCustomModel.c.id != id).limit(1)
+        result = (await self.conn.execute(query)).first()
+        if result:
+            return cattr.structure(result._mapping, QuizCustomReadSchema)
+        return None
+
     async def edit_question(self, id: int, data: QuizCustomAddSchema) -> bool:
         """
         update soal
