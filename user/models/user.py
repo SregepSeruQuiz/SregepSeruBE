@@ -1,4 +1,4 @@
-from core.core import meta
+from core.db import meta
 
 from sqlalchemy import Table, Column
 
