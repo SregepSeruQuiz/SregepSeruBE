@@ -64,14 +64,14 @@ class UserCrud:
             return cattr.structure(result._mapping, UserReadSchema)
         return None
 
-    async def update_email(self, id: int, email: str) -> UpdateEmailSchema:
+    async def update_email(self, id: int, email: UpdateEmailSchema) -> bool:
         """ untuk update email"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(email=email)
         await self.conn.execute(query)
         return True
 
-    async def update_password(self, id: int, password: str) -> bool:
+    async def update_password(self, id: int, password: UpdatePasswordSchema) -> bool:
         """ utuk update password"""
         query = UserModel.update().where(UserModel.c.id == id)
         query = query.values(password=password)

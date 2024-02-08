@@ -85,7 +85,7 @@ class User:
             return result
         raise IdNotFoundError
 
-    async def update_email(self, id: int, email: str) -> UpdateEmailSchema:
+    async def update_email(self, id: int, email: UpdateEmailSchema) -> bool:
         """
         ganti email
         :param id:
@@ -94,7 +94,7 @@ class User:
         """
         return await UserCrud(self.conn).update_email(id, email)
 
-    async def update_password(self, id: int, password: str) -> bool:
+    async def update_password(self, id: int, password: UpdatePasswordSchema) -> bool:
         """
         ganti password
         :param id:

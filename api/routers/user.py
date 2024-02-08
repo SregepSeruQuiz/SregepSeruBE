@@ -1,3 +1,4 @@
+import re
 from fastapi import APIRouter
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
@@ -12,21 +13,25 @@ from api.depends.login import get_uuid
 from api.depends.login import get_user_id
 from user.facades.user import User
 from user.exceptions import EmailNotFoundError, WrongPasswordError
-from user.schemas.user import UserAddSchema
+from user.schemas.user import UserAddSchema,UpdateEmailSchema,UpdatePasswordSchema
 router_login = APIRouter(tags=['login'])
 
 context: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
 # belum selesai
 @router_login.post("/login")
-async def login_email(*, conn: AsyncConnection = Depends(get_conn), data: OAuth2PasswordRequestForm = Depends()):
+async def login(*, conn: AsyncConnection = Depends(get_conn), data: OAuth2PasswordRequestForm = Depends()):
     """
     Router Login
     """
     u = User(conn)
     try:
-        result = await u.login_email(data.username)
+        if re.fullmatch(regex, data.username):
+            result = await u.login_email(data.username)
+        else:
+            result = await u.login_username(data.username)
         if not result:
             raise EmailNotFoundError
         else:
@@ -72,10 +77,28 @@ async def profile(*,conn_id:AsyncConnection = Depends(get_user_id)):
     return result
 
 @router_login.update("/update_email")
-async def update_email(*,conn_id:AsyncConnection = Depends(get_user_id),email:str):
+async def update_email(*,conn_id:AsyncConnection = Depends(get_user_id),email:UpdateEmailSchema):
     """
     router untuk change email
     :param conn_id:
     :param email:
     :return:
     """
+    conn = conn_id[0]
+    id = conn_id[1]
+    u = User(conn)
+    result = await u.update_email(id,email)
+    return result
+@router_login.update("/update_password")
+async def update_password(*,conn_id:AsyncConnection = Depends(get_user_id),password:UpdatePasswordSchema):
+    """
+    router untuk change email
+    :param conn_id:
+    :param email:
+    :return:
+    """
+    conn = conn_id[0]
+    id = conn_id[1]
+    u = User(conn)
+    result = await u.update_password(id,password)
+    return result

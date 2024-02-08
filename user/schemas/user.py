@@ -36,13 +36,14 @@ class UserAddSchema(BaseModel):
     username: str
     nama: str
     email: str = Field(regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-    password: str
+    password: str=Field(regex='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$')
     reviewer: StatusReviewerEnum = Field(StatusReviewerEnum.NonReviewer)
 
 
 class UpdateEmailSchema(BaseModel):
     email: str = Field(regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-
+class UpdatePasswordSchema(BaseModel):
+    password: str = Field(regex='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$')
 
 class PaginationSchema(BaseModel):
     """
