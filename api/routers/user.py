@@ -13,7 +13,8 @@ from api.depends.login import get_uuid
 from api.depends.login import get_user_id
 from user.facades.user import User
 from user.exceptions import EmailNotFoundError, WrongPasswordError
-from user.schemas.user import UserAddSchema,UpdateEmailSchema,UpdatePasswordSchema
+from user.schemas.user import UserAddSchema, UpdateEmailSchema, UpdatePasswordSchema
+
 router_login = APIRouter(tags=['login'])
 
 context: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -48,8 +49,9 @@ async def login(*, conn: AsyncConnection = Depends(get_conn), data: OAuth2Passwo
     except IntegrityError as e:
         raise HTTPException(status_code=404, detail="Email not found ")
 
+
 @router_login.post("/create_user")
-async def create_user(*,conn: AsyncConnection = Depends(get_conn), data:UserAddSchema):
+async def create_user(*, conn: AsyncConnection = Depends(get_conn), data: UserAddSchema):
     """
     router untuk membuat user baru
     :param conn:
@@ -63,8 +65,9 @@ async def create_user(*,conn: AsyncConnection = Depends(get_conn), data:UserAddS
     except IntegrityError as e:
         raise HTTPException(status_code=404, detail="Email not found ")
 
+
 @router_login.post("/profile")
-async def profile(*,conn_id:AsyncConnection = Depends(get_user_id)):
+async def profile(*, conn_id: AsyncConnection = Depends(get_user_id)):
     """
     router untuk melihat profile diri sendiri
     :param conn:
@@ -76,8 +79,9 @@ async def profile(*,conn_id:AsyncConnection = Depends(get_user_id)):
     result = await u.profile(id)
     return result
 
-@router_login.update("/update_email")
-async def update_email(*,conn_id:AsyncConnection = Depends(get_user_id),email:UpdateEmailSchema):
+
+@router_login.put("/update_email")
+async def update_email(*, conn_id: AsyncConnection = Depends(get_user_id), email: UpdateEmailSchema):
     """
     router untuk change email
     :param conn_id:
@@ -87,10 +91,12 @@ async def update_email(*,conn_id:AsyncConnection = Depends(get_user_id),email:Up
     conn = conn_id[0]
     id = conn_id[1]
     u = User(conn)
-    result = await u.update_email(id,email)
+    result = await u.update_email(id, email)
     return result
-@router_login.update("/update_password")
-async def update_password(*,conn_id:AsyncConnection = Depends(get_user_id),password:UpdatePasswordSchema):
+
+
+@router_login.put("/update_password")
+async def update_password(*, conn_id: AsyncConnection = Depends(get_user_id), password: UpdatePasswordSchema):
     """
     router untuk change email
     :param conn_id:
@@ -100,5 +106,5 @@ async def update_password(*,conn_id:AsyncConnection = Depends(get_user_id),passw
     conn = conn_id[0]
     id = conn_id[1]
     u = User(conn)
-    result = await u.update_password(id,password)
+    result = await u.update_password(id, password)
     return result
