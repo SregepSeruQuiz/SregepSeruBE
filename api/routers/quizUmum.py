@@ -6,9 +6,27 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 
 from typing import Optional
 
+from quiz.facades.QuizUmum import QuizUmum
+from quiz.schemas.QuizUmum import QuizUmumReadSchema
 from quiz.exceptions import QuizNotFoundError
 from api.depends.login import get_user_id
+from api.depends.db import get_conn
 
-router_quiz = APIRouter(prefix="/quiz", tags=["Quiz"])
+router_quizumum = APIRouter(prefix="/quiz", tags=["QuizUmum"])
+
+
+@router_quizumum.get("/umum", tags=["umum"])
+async def get_quiz_umum(*, conn=Depends(get_conn), id: list[int]):
+    """
+    Quiz Umum
+    :param conn:
+    :return:
+    """
+    u = QuizUmum(conn)
+    try:
+        result = await u.get_quiz_umum(id)
+        return result
+    except QuizNotFoundError as e:
+        raise HTTPException(status_code=404, detail="Quiz not found ")
 
 

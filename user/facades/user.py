@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from user.cruds.user import UserCrud
 from user.schemas.user import UserAddSchema, UserReadSchema, UpdateEmailSchema, StatusReviewerEnum, LoginSchema, \
-    PaginationSchema
+    PaginationSchema, UpdatePasswordSchema
 from user.exceptions import BelowZeroError, IdNotFoundError, EmailNotFoundError, EmailNotUniqueError, UuidNotFoundError, \
     SignatureExpiredError, WrongPasswordError, SamePasswordError, UsernameNotFoundError
 from typing import Optional
