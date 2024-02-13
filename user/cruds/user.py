@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from user.models.user import UserModel
-from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema, UpdateEmailSchema
+from user.schemas.user import UserReadSchema, UserAddSchema, LoginSchema, PaginationSchema, UpdateEmailSchema,UpdatePasswordSchema
 
 
 @attr.define
@@ -16,7 +16,7 @@ class UserCrud:
     """
     conn: AsyncConnection
 
-    async def get_id(self, uuid: str) -> Optional[id]:
+    async def get_id(self, uuid: str) -> Optional[int]:
         """ untuk dpt id abis login"""
         query = select(UserModel.c.id).select_from(UserModel).where(UserModel.c.uuid == uuid)
         result = (await self.conn.execute(query)).first()

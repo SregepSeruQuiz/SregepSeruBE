@@ -44,6 +44,6 @@ class QuizCustomListCrud:
         :param id:
         :return:
         """
-        query = QuizCustomListModel.delete().where(QuizCustomModel.c.id == id)
+        query = QuizCustomListModel.delete().where(QuizCustomListModel.c.id == id)
         await self.conn.execute(query)
         return True

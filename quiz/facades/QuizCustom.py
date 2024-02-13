@@ -56,10 +56,10 @@ class QuizCustom:
         :param id:
         :return:
         """
-        result = QuizCustomCrud(self.conn).question_by_id(id)
-        if result:
-            return result
-        raise QuizNotFoundError
+        result = await QuizCustomCrud(self.conn).question_by_id(id)
+        if not result:
+            raise QuizNotFoundError
+        return result
 
     async def get_quiz_custom(self, id: list[int]) -> QuizCustomReadSchema:
         """
@@ -67,7 +67,7 @@ class QuizCustom:
         :param id:
         :return:
         """
-        result = QuizCustomCrud(self.conn).get_quiz_custom(id)
+        result = await QuizCustomCrud(self.conn).get_quiz_custom(id)
         if result:
             return result
         raise QuizNotFoundError

@@ -50,7 +50,7 @@ class QuizCustomCrud:
             QuizCustomModel.c.id == id)
         result = (await self.conn.execute(query)).first()
         if result:
-            return cattr.structure(result._mapping, UserReadSchema)
+            return cattr.structure(result._mapping, QuizCustomReadSchema)
         return None
 
     async def get_quiz_custom(self, id: list[int]) -> Optional[QuizCustomReadSchema]:

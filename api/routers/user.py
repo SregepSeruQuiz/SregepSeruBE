@@ -67,7 +67,7 @@ async def create_user(*, conn: AsyncConnection = Depends(get_conn), data: UserAd
 
 
 @router_login.post("/profile")
-async def profile(*, conn_id: AsyncConnection = Depends(get_user_id)):
+async def profile(*, conn_id: tuple[AsyncConnection, int] = Depends(get_user_id)):
     """
     router untuk melihat profile diri sendiri
     :param conn:
@@ -81,7 +81,7 @@ async def profile(*, conn_id: AsyncConnection = Depends(get_user_id)):
 
 
 @router_login.put("/update_email")
-async def update_email(*, conn_id: AsyncConnection = Depends(get_user_id), email: UpdateEmailSchema):
+async def update_email(*, conn_id: tuple[AsyncConnection, int] = Depends(get_user_id), email: UpdateEmailSchema):
     """
     router untuk change email
     :param conn_id:
@@ -96,7 +96,7 @@ async def update_email(*, conn_id: AsyncConnection = Depends(get_user_id), email
 
 
 @router_login.put("/update_password")
-async def update_password(*, conn_id: AsyncConnection = Depends(get_user_id), password: UpdatePasswordSchema):
+async def update_password(*, conn_id: tuple[AsyncConnection, int] = Depends(get_user_id), password: UpdatePasswordSchema):
     """
     router untuk change email
     :param conn_id:
