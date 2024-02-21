@@ -4,9 +4,9 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from api.depends.login import get_user_id
-from quiz.facades.QuizCustom import QuizCustom
-from quiz.schemas.QuizCustom import QuizCustomAddSchema, QuizCustomReadSchema
-from quiz.schemas.QuizCustomList import QuizCustomListAddSchema, QuizCustomListReadByIdSchema
+from quiz.facades.quizCustom import QuizCustom
+from quiz.schemas.quizCustom import QuizCustomAddSchema, QuizCustomReadSchema
+from quiz.schemas.quizCustomList import QuizCustomListAddSchema, QuizCustomListReadByIdSchema
 
 router_quizcustom = APIRouter(tags=['custom'])
 

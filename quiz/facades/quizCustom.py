@@ -1,10 +1,10 @@
 import attr
-from quiz.models.QuizCustomList import QuizCustomListModel
-from quiz.models.QuizCustom import QuizCustomModel
-from quiz.cruds.QuizCustom import QuizCustomCrud
+from quiz.models.quizCustomList import QuizCustomListModel
+from quiz.models.quizCustom import QuizCustomModel
+from quiz.cruds.quizCustom import QuizCustomCrud
 from quiz.cruds.QuizCustomList import QuizCustomListCrud
-from quiz.schemas.QuizCustomList import QuizCustomListAddSchema, QuizCustomListReadByIdSchema
-from quiz.schemas.QuizCustom import QuizCustomAddSchema, QuizCustomReadSchema
+from quiz.schemas.quizCustomList import QuizCustomListAddSchema, QuizCustomListReadByIdSchema
+from quiz.schemas.quizCustom import QuizCustomAddSchema, QuizCustomReadSchema
 from quiz.exceptions import QuizNotFoundError
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncConnection

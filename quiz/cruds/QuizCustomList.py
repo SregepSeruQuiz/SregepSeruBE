@@ -3,8 +3,8 @@ import cattr
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from sqlalchemy import select
-from quiz.models.QuizCustomList import QuizCustomListModel
-from quiz.schemas.QuizCustomList import QuizCustomListReadByIdSchema, QuizCustomListAddSchema
+from quiz.models.quizCustomList import QuizCustomListModel
+from quiz.schemas.quizCustomList import QuizCustomListReadByIdSchema, QuizCustomListAddSchema
 
 
 @attr.define

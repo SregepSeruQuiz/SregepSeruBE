@@ -6,8 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 
 from typing import Optional
 
-from quiz.facades.QuizUmum import QuizUmum
-from quiz.schemas.QuizUmum import QuizUmumReadSchema
+from quiz.facades.quizUmum import QuizUmum
+from quiz.schemas.quizUmum import QuizUmumReadSchema
 from quiz.exceptions import QuizNotFoundError
 from api.depends.login import get_user_id
 from api.depends.db import get_conn

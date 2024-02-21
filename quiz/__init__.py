@@ -1,5 +1,5 @@
-from quiz.models.QuizUmum import QuizUmumModel
-from quiz.models.QuizCustomList import QuizCustomListModel
-from quiz.models.QuizCustom import QuizCustomModel
+from quiz.models.quizUmum import QuizUmumModel
+from quiz.models.quizCustomList import QuizCustomListModel
+from quiz.models.quizCustom import QuizCustomModel
 
 tables = [QuizUmumModel, QuizCustomListModel, QuizCustomModel]

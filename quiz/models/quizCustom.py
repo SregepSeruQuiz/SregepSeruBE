@@ -4,7 +4,7 @@ from sqlalchemy import Table, Column
 
 from sqlalchemy import BigInteger, Unicode, ForeignKey, SmallInteger
 
-from quiz.models.QuizCustomList import QuizCustomListModel
+from quiz.models.quizCustomList import QuizCustomListModel
 
 QuizCustomModel: Table = Table(
     "QuizCustom", meta,

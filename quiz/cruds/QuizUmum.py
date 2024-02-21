@@ -4,8 +4,8 @@ from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from sqlalchemy import select
-from quiz.models.QuizUmum import QuizUmumModel
-from quiz.schemas.QuizUmum import QuizUmumReadSchema
+from quiz.models.quizUmum import QuizUmumModel
+from quiz.schemas.quizUmum import QuizUmumReadSchema
 
 
 @attr.define

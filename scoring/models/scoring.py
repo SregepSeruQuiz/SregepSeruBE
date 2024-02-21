@@ -5,7 +5,7 @@ from sqlalchemy import Table, Column
 from sqlalchemy import BigInteger, Unicode, ForeignKey, SmallInteger
 
 from user.models.user import UserModel
-from quiz.models.QuizCustomList import QuizCustomListModel
+from quiz.models.quizCustomList import QuizCustomListModel
 
 
 ScoringModel: Table = Table(

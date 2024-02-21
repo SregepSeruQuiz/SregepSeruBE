@@ -1,6 +1,6 @@
 import attr
-from quiz.models.QuizUmum import QuizUmumModel
-from quiz.schemas.QuizUmum import QuizUmumReadSchema, PaginationSchema
+from quiz.models.quizUmum import QuizUmumModel
+from quiz.schemas.quizUmum import QuizUmumReadSchema, PaginationSchema
 from quiz.cruds.QuizUmum import QuizUmumCrud
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncConnection

@@ -4,9 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from typing import Optional
 
 from sqlalchemy import select
-from quiz.models.QuizCustomList import QuizCustomListModel
-from quiz.models.QuizCustom import QuizCustomModel
-from quiz.schemas.QuizCustom import QuizCustomAddSchema, QuizCustomReadSchema
+from quiz.models.quizCustomList import QuizCustomListModel
+from quiz.models.quizCustom import QuizCustomModel
+from quiz.schemas.quizCustom import QuizCustomAddSchema, QuizCustomReadSchema
 
 
 @attr.define
